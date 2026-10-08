@@ -6,3 +6,5 @@ exit и обработка ошибок. Python 3.10+, внешние завис
 Запуск: `python3 -m src.main`. Тесты: `python3 -m unittest discover -s tests -v`.
 
 Пример: `ls "a b"`, `cd /`, `unknown`, `ls "`, `exit`.
+
+Этап 2: --vfs, --script, --batch; сценарий прекращается при ошибке.
