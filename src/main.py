@@ -2,6 +2,7 @@
 import argparse
 from pathlib import Path
 from src.shell import Shell
+from src.vfs import VFS
 
 
 def parse_args(argv=None):
@@ -35,6 +36,7 @@ def main(argv=None):
     print(f"Пакетный режим: {args.batch}")
     shell = Shell()
     try:
+        shell.vfs = VFS(args.vfs)
         if args.script and not run_script(shell, args.script):
             return 1
         if not args.batch:
