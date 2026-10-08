@@ -3,6 +3,7 @@ import argparse
 from pathlib import Path
 from src.shell import Shell
 from src.vfs import VFS
+from src.commands import install
 
 
 def parse_args(argv=None):
@@ -37,6 +38,7 @@ def main(argv=None):
     shell = Shell()
     try:
         shell.vfs = VFS(args.vfs)
+        install(shell)
         if args.script and not run_script(shell, args.script):
             return 1
         if not args.batch:

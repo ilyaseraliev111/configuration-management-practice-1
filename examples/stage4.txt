@@ -1,0 +1,22 @@
+ls
+ls -a
+ls -l
+ls -al docs readme.txt
+ls -- "space dir"
+cd "space dir"
+tail "hello world.txt"
+cd ..
+cd /docs/deep/level3
+ls
+cd
+cd ./docs/../docs
+tail notes.txt
+tail -n 2 notes.txt
+tail -n 0 notes.txt
+tail -- notes.txt
+tail -n 1 notes.txt /readme.txt
+du
+du -s /
+du -a /docs
+du -- /readme.txt
+exit
