@@ -1,0 +1,43 @@
+test_errors (test_shell.ShellTests.test_errors)
+Ошибочный ввод не завершает сеанс. ... ok
+test_exit (test_shell.ShellTests.test_exit)
+Команда exit останавливает цикл. ... ok
+test_quotes (test_shell.ShellTests.test_quotes)
+Пробелы и пустые аргументы сохраняются в кавычках. ... ok
+test_bad_source (test_vfs.VFSTests.test_bad_source)
+Отсутствующий источник и файл вместо каталога отклоняются. ... ok
+test_binary (test_vfs.VFSTests.test_binary)
+Двоичные данные сохраняются, tail сообщает ошибку декодирования. ... ok
+test_chown (test_vfs.VFSTests.test_chown)
+Рекурсия изменяет дерево, а :group сохраняет владельца. ... ok
+test_du (test_vfs.VFSTests.test_du)
+du суммирует байты, включая скрытые файлы и Unicode. ... ok
+test_empty_source (test_vfs.VFSTests.test_empty_source)
+Настоящий пустой каталог является допустимой VFS. ... ok
+test_listing (test_vfs.VFSTests.test_listing)
+ls показывает скрытые файлы только с -a. ... ok
+test_main_errors (test_vfs.VFSTests.test_main_errors)
+Ошибки VFS и чтения сценария дают ненулевой код возврата. ... ok
+test_paths (test_vfs.VFSTests.test_paths)
+.. ограничен корнем, пути разрешаются относительно cwd. ... ok
+test_real_prompt (test_vfs.VFSTests.test_real_prompt)
+Приглашение использует реальные данные ОС. ... ok
+test_script_exit (test_vfs.VFSTests.test_script_exit)
+exit прекращает сценарий без ошибки. ... ok
+test_script_stop (test_vfs.VFSTests.test_script_stop)
+После ошибки ни одна следующая команда не выполняется. ... ok
+test_snapshot_isolation (test_vfs.VFSTests.test_snapshot_isolation)
+После загрузки чтение использует снимок, а не реальный диск. ... ok
+test_source_unchanged (test_vfs.VFSTests.test_source_unchanged)
+Файлы, владельцы и mtime исходной папки не изменяются. ... ok
+test_symlink (test_vfs.VFSTests.test_symlink)
+Ссылки отклоняются, в том числе ведущие вне VFS. ... ok
+test_tail (test_vfs.VFSTests.test_tail)
+Последние строки, ноль строк, UTF-8 и отсутствие файла. ... ok
+test_touch (test_vfs.VFSTests.test_touch)
+touch сохраняет содержимое и не создаёт отсутствующих родителей. ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.020s
+
+OK

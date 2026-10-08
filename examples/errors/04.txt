@@ -1,0 +1,2 @@
+ls -z
+touch MUST_NOT_EXIST

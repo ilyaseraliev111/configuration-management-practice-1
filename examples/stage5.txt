@@ -1,0 +1,14 @@
+touch new.txt "space dir/new file.txt"
+ls -l new.txt
+touch new.txt
+touch -c absent.txt
+touch -- -example
+chown student new.txt
+chown student:students new.txt
+chown :other new.txt
+chown 1000:1000 new.txt
+chown -R student:students docs
+ls -l docs/deep/level3
+ls -l new.txt
+ls -a /
+exit

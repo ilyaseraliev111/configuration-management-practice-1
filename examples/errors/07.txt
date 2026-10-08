@@ -1,0 +1,2 @@
+cd readme.txt
+touch MUST_NOT_EXIST

@@ -1,0 +1,2 @@
+du -sa
+touch MUST_NOT_EXIST

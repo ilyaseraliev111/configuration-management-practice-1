@@ -1,0 +1,2 @@
+ls "unterminated
+touch MUST_NOT_EXIST

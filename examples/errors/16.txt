@@ -1,0 +1,2 @@
+touch /missing/file
+touch MUST_NOT_EXIST

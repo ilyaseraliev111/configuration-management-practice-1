@@ -5,6 +5,8 @@ from src.vfs import normalized
 
 DEFAULT_TAIL_LINES = 10
 MIN_LINE_COUNT = 0
+SINGLE_PATH = 1
+OPTION_PAIR_SIZE = 2
 
 
 def arguments(args, supported):
@@ -42,7 +44,7 @@ class Commands:
             path = self.path(value)
             node = self.shell.vfs.get(path)
             entries = self.shell.vfs.children(path) if node.is_dir else [path]
-            if len(paths) > 1:
+            if len(paths) > SINGLE_PATH:
                 print(f"{value}:")
             for entry in entries:
                 label = PurePosixPath(entry).name or "/"
@@ -64,7 +66,7 @@ class Commands:
     def cd(self, name, args):
         """cd [--] [каталог]: меняет только виртуальный каталог."""
         _, paths = arguments(args, "")
-        if len(paths) > 1:
+        if len(paths) > SINGLE_PATH:
             raise ValueError("cd: ожидается не более одного пути")
         path = self.path(paths[0] if paths else "/")
         if not self.shell.vfs.get(path).is_dir:
@@ -105,7 +107,7 @@ class Commands:
             if node.is_dir:
                 raise ValueError(f"tail: это каталог: {path}")
             text = node.data.decode("utf-8")
-            if len(paths) > 1:
+            if len(paths) > SINGLE_PATH:
                 print(f"==> {value} <==")
             lines = text.splitlines(keepends=True)
             print("".join(lines[-count:]) if count else "", end="")
@@ -114,7 +116,7 @@ class Commands:
         """Проверяет число строк и обязательные имена файлов."""
         count = DEFAULT_TAIL_LINES
         if args[:1] == ["-n"]:
-            if len(args) < 2:
+            if len(args) < OPTION_PAIR_SIZE:
                 raise ValueError("tail: после -n требуется число")
             try:
                 count = int(args[1])
@@ -131,6 +133,12 @@ class Commands:
 
 def install(shell):
     """Подключает команды к сеансу."""
+    from src.mutations import Mutations
+
     commands = Commands(shell)
     shell.commands = {"ls": commands.listing, "cd": commands.cd,
                       "du": commands.du, "tail": commands.tail}
+
+    mutations = Mutations(commands)
+    shell.commands.update({"touch": mutations.touch,
+                           "chown": mutations.chown})

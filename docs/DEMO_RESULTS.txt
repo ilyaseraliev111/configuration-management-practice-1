@@ -1,0 +1,105 @@
+VFS: examples/vfs/demo
+Сценарий: examples/stage4.txt
+Пакетный режим: True
+root@fb6837004857:/$ ls
+docs
+readme.txt
+space dir
+root@fb6837004857:/$ ls -a
+.hidden
+docs
+readme.txt
+space dir
+root@fb6837004857:/$ ls -l
+d 0:0 0 2026-10-08T12:27:01 docs
+- 0:0 69 2026-10-08T12:27:01 readme.txt
+d 0:0 0 2026-10-08T12:27:01 space dir
+root@fb6837004857:/$ ls -al docs readme.txt
+docs:
+d 0:0 0 2026-10-08T12:27:01 deep
+- 0:0 231 2026-10-08T12:27:01 notes.txt
+readme.txt:
+- 0:0 69 2026-10-08T12:27:01 readme.txt
+root@fb6837004857:/$ ls -- "space dir"
+hello world.txt
+root@fb6837004857:/$ cd "space dir"
+root@fb6837004857:/space dir$ tail "hello world.txt"
+Привет, мир!
+root@fb6837004857:/space dir$ cd ..
+root@fb6837004857:/$ cd /docs/deep/level3
+root@fb6837004857:/docs/deep/level3$ ls
+data.txt
+root@fb6837004857:/docs/deep/level3$ cd
+root@fb6837004857:/$ cd ./docs/../docs
+root@fb6837004857:/docs$ tail notes.txt
+Строка 6
+Строка 7
+Строка 8
+Строка 9
+Строка 10
+Строка 11
+Строка 12
+Строка 13
+Строка 14
+Строка 15
+root@fb6837004857:/docs$ tail -n 2 notes.txt
+Строка 14
+Строка 15
+root@fb6837004857:/docs$ tail -n 0 notes.txt
+root@fb6837004857:/docs$ tail -- notes.txt
+Строка 6
+Строка 7
+Строка 8
+Строка 9
+Строка 10
+Строка 11
+Строка 12
+Строка 13
+Строка 14
+Строка 15
+root@fb6837004857:/docs$ tail -n 1 notes.txt /readme.txt
+==> notes.txt <==
+Строка 15
+==> /readme.txt <==
+Пример виртуальной файловой системы.
+root@fb6837004857:/docs$ du
+28	/docs/deep/level3
+28	/docs/deep
+259	/docs
+root@fb6837004857:/docs$ du -s /
+374	/
+root@fb6837004857:/docs$ du -a /docs
+28	/docs/deep/level3/data.txt
+28	/docs/deep/level3
+28	/docs/deep
+231	/docs/notes.txt
+259	/docs
+root@fb6837004857:/docs$ du -- /readme.txt
+69	/readme.txt
+root@fb6837004857:/docs$ exit
+VFS: examples/vfs/demo
+Сценарий: examples/stage5.txt
+Пакетный режим: True
+root@fb6837004857:/$ touch new.txt "space dir/new file.txt"
+root@fb6837004857:/$ ls -l new.txt
+- root:0 0 2026-10-08T12:32:03 new.txt
+root@fb6837004857:/$ touch new.txt
+root@fb6837004857:/$ touch -c absent.txt
+root@fb6837004857:/$ touch -- -example
+root@fb6837004857:/$ chown student new.txt
+root@fb6837004857:/$ chown student:students new.txt
+root@fb6837004857:/$ chown :other new.txt
+root@fb6837004857:/$ chown 1000:1000 new.txt
+root@fb6837004857:/$ chown -R student:students docs
+root@fb6837004857:/$ ls -l docs/deep/level3
+- student:students 28 2026-10-08T12:27:01 data.txt
+root@fb6837004857:/$ ls -l new.txt
+- 1000:1000 0 2026-10-08T12:32:03 new.txt
+root@fb6837004857:/$ ls -a /
+-example
+.hidden
+docs
+new.txt
+readme.txt
+space dir
+root@fb6837004857:/$ exit

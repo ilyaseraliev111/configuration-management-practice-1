@@ -1,0 +1,2 @@
+du /missing
+touch MUST_NOT_EXIST
