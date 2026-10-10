@@ -106,7 +106,7 @@ class Commands:
             node = self.shell.vfs.get(path)
             if node.is_dir:
                 raise ValueError(f"tail: это каталог: {path}")
-            text = node.data.decode("utf-8")
+            text = node.data.decode("utf-8").replace("\r\n", "\n")
             if len(paths) > SINGLE_PATH:
                 print(f"==> {value} <==")
             lines = text.splitlines(keepends=True)

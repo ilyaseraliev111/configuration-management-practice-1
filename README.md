@@ -169,6 +169,16 @@ Windows: тесты запускаются через `python -m unittest discov
 (два файла), demo (вложенные каталоги, включая docs/deep/level3, пробелы, кириллица).
 Настоящий пустой каталог отдельно покрывается временными тестовыми данными.
 
+## Ветки разработки
+
+| Этап | Ветка |
+|---|---|
+| Этап 1 — REPL | https://github.com/ilyaseraliev111/configuration-management-practice-1/tree/stage1-repl |
+| Этап 2 — Конфигурация | https://github.com/ilyaseraliev111/configuration-management-practice-1/tree/stage2-config |
+| Этап 3 — VFS | https://github.com/ilyaseraliev111/configuration-management-practice-1/tree/stage3-vfs |
+| Этап 4 — Основные команды | https://github.com/ilyaseraliev111/configuration-management-practice-1/tree/stage4-commands |
+| Этап 5 — Дополнительные команды | https://github.com/ilyaseraliev111/configuration-management-practice-1/tree/stage5-extra |
+
 ## История и публикация
 
 В поставку включена папка `.git` с пятью последовательными коммитами
