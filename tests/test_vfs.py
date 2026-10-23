@@ -50,6 +50,44 @@ class VFSTests(unittest.TestCase):
         self.run_line('ls -z', False)
         self.run_line('cd "hello world"', False)
 
+    def test_invalid_path_components(self):
+        """.. не скрывает отсутствующий каталог или файл в пути."""
+        before = {key: vars(node).copy()
+                  for key, node in self.shell.vfs.nodes.items()}
+        for prefix in ['"hello world"', 'missing']:
+            for command in ['ls', 'du', 'tail', 'touch', 'chown user']:
+                with self.subTest(prefix=prefix, command=command):
+                    self.run_line(f'{command} {prefix}/../.hidden', False)
+        after = {key: vars(node).copy()
+                 for key, node in self.shell.vfs.nodes.items()}
+        self.assertEqual(before, after)
+
+    def test_trailing_slash(self):
+        """Слеш после имени требует существующего каталога."""
+        for command in ['ls', 'du', 'tail', 'touch', 'chown user']:
+            with self.subTest(command=command):
+                self.run_line(f'{command} "hello world/"', False)
+        self.run_line('touch new/', False)
+        self.assertNotIn('/new', self.shell.vfs.nodes)
+        self.run_line('touch a/')
+        self.assertIn('b', self.run_line('ls a/'))
+
+    def test_valid_component_paths(self):
+        """Корректные .., повторные слеши и относительные пути работают."""
+        self.run_line('cd /a/b')
+        result = self.run_line('tail ./c/../c//data')
+        self.assertEqual(result, '1\n2\n3\n')
+        self.run_line('touch c/../new')
+        self.assertIn('/a/b/new', self.shell.vfs.nodes)
+        self.assertEqual(self.run_line('tail /../../.hidden'), 'x')
+
+    def test_logical_cd(self):
+        """cd логически сокращает .., как обычная оболочка без ссылок."""
+        self.run_line('cd "hello world/.."')
+        self.assertEqual(self.shell.cwd, '/')
+        self.run_line('cd missing/..')
+        self.assertEqual(self.shell.cwd, '/')
+
     def test_tail(self):
         """Последние строки, ноль строк, UTF-8 и отсутствие файла."""
         self.assertEqual(self.run_line('tail -n 2 /a/b/c/data'), '2\n3\n')
@@ -152,6 +190,18 @@ class VFSTests(unittest.TestCase):
         with contextlib.redirect_stdout(io.StringIO()):
             self.assertTrue(run_script(self.shell, script))
         self.assertNotIn('/forbidden', self.shell.vfs.nodes)
+
+    def test_error_examples_stop(self):
+        """Все ошибочные примеры останавливаются до контрольного touch."""
+        project = Path(__file__).resolve().parents[1]
+        for script in sorted((project / 'examples/errors').glob('*.txt')):
+            with self.subTest(script=script.name):
+                shell = Shell()
+                shell.vfs = VFS(project / 'examples/vfs/demo')
+                install(shell)
+                with contextlib.redirect_stdout(io.StringIO()):
+                    self.assertFalse(run_script(shell, script))
+                self.assertNotIn('/MUST_NOT_EXIST', shell.vfs.nodes)
 
     def test_main_errors(self):
         """Ошибки VFS и чтения сценария дают ненулевой код возврата."""

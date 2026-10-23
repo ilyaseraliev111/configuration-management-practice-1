@@ -35,7 +35,7 @@ class Commands:
 
     def path(self, value):
         """Разрешает путь относительно текущего каталога VFS."""
-        return normalized(value, self.shell.cwd)
+        return self.shell.vfs.resolve(value, self.shell.cwd)
 
     def listing(self, name, args):
         """ls [-al] [--] [путь ...]: содержимое и метаданные."""
@@ -68,7 +68,7 @@ class Commands:
         _, paths = arguments(args, "")
         if len(paths) > SINGLE_PATH:
             raise ValueError("cd: ожидается не более одного пути")
-        path = self.path(paths[0] if paths else "/")
+        path = normalized(paths[0] if paths else "/", self.shell.cwd)
         if not self.shell.vfs.get(path).is_dir:
             raise ValueError(f"cd: не каталог: {path}")
         self.shell.cwd = path

@@ -54,6 +54,20 @@ class VFS:
             for child in sorted(physical.iterdir()):
                 self._load(child, normalized(child.name, virtual))
 
+    def resolve(self, path, cwd="/"):
+        """Проверяет компоненты до ..; последний файл может отсутствовать."""
+        if not path:
+            raise ValueError("пустой путь")
+        current = "/" if path.startswith("/") else cwd
+        parts = path.split("/")
+        for index, part in enumerate(parts):
+            if not self.get(current).is_dir:
+                raise ValueError(f"не каталог: {current}")
+            current = normalized(part or ".", current)
+            if index < len(parts) - 1:
+                self.get(current)
+        return current
+
     def get(self, path):
         """Получает объект с проверкой промежуточных каталогов."""
         for parent in PurePosixPath(path).parents:

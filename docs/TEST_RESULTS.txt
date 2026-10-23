@@ -14,8 +14,14 @@ test_du (test_vfs.VFSTests.test_du)
 du суммирует байты, включая скрытые файлы и Unicode. ... ok
 test_empty_source (test_vfs.VFSTests.test_empty_source)
 Настоящий пустой каталог является допустимой VFS. ... ok
+test_error_examples_stop (test_vfs.VFSTests.test_error_examples_stop)
+Все ошибочные примеры останавливаются до контрольного touch. ... ok
+test_invalid_path_components (test_vfs.VFSTests.test_invalid_path_components)
+.. не скрывает отсутствующий каталог или файл в пути. ... ok
 test_listing (test_vfs.VFSTests.test_listing)
 ls показывает скрытые файлы только с -a. ... ok
+test_logical_cd (test_vfs.VFSTests.test_logical_cd)
+cd логически сокращает .., как обычная оболочка без ссылок. ... ok
 test_main_errors (test_vfs.VFSTests.test_main_errors)
 Ошибки VFS и чтения сценария дают ненулевой код возврата. ... ok
 test_paths (test_vfs.VFSTests.test_paths)
@@ -36,8 +42,12 @@ test_tail (test_vfs.VFSTests.test_tail)
 Последние строки, ноль строк, UTF-8 и отсутствие файла. ... ok
 test_touch (test_vfs.VFSTests.test_touch)
 touch сохраняет содержимое и не создаёт отсутствующих родителей. ... ok
+test_trailing_slash (test_vfs.VFSTests.test_trailing_slash)
+Слеш после имени требует существующего каталога. ... ok
+test_valid_component_paths (test_vfs.VFSTests.test_valid_component_paths)
+Корректные .., повторные слеши и относительные пути работают. ... ok
 
 ----------------------------------------------------------------------
-Ran 19 tests in 0.020s
+Ran 24 tests in 0.024s
 
 OK

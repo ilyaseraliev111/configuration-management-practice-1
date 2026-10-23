@@ -1,0 +1,2 @@
+touch created_as_directory/
+touch MUST_NOT_EXIST

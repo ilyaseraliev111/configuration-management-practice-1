@@ -1,0 +1,2 @@
+tail readme.txt/../readme.txt
+touch MUST_NOT_EXIST
